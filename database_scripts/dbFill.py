@@ -84,6 +84,7 @@ def main(argv):
         # Pick a random first name and last name
         x = randint(0,99)
         y = randint(0,99)
+        print(firstNames[x], lastNames[y])
         params = urllib.parse.urlencode({'name': firstNames[x] + " " + lastNames[y], 'email': firstNames[x] + "@" + lastNames[y] + ".com"})
 
         # POST the user
@@ -98,7 +99,7 @@ def main(argv):
         userEmails.append(str(d['data']['email']))
 
     # Open 'tasks.txt' for sample task names
-    f = open('tasks.txt','r')
+    f = open('database_scripts/tasks.txt','r')
     taskNames = f.read().splitlines()
 
     # Loop 'taskCount' number of times
