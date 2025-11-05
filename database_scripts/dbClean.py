@@ -24,6 +24,8 @@ def getUsers(conn):
     conn.request("GET","""/api/users""")
     response = conn.getresponse()
     data = response.read()
+    if not data:
+        return []
     d = json.loads(data)
 
     # Array of user IDs
@@ -33,9 +35,11 @@ def getUsers(conn):
 
 def getTasks(conn):
     # Retrieve the list of tasks
-    conn.request("GET","""/api/tasks?where={"_id":1}""")
+    conn.request("GET","""/api/tasks""")
     response = conn.getresponse()
     data = response.read()
+    if not data:
+        return []
     d = json.loads(data)
 
     # Array of user IDs
@@ -84,19 +88,20 @@ def main(argv):
         print(users)
 
     # # Fetch a list of tasks
-    # tasks = getTasks(conn)
+    tasks = getTasks(conn)
+    print(tasks)
 
-    # # Loop for as long as the database still returns tasks
-    # while len(tasks):
+    # Loop for as long as the database still returns tasks
+    while len(tasks):
 
-    #     # Delete each individual task
-    #     for task in tasks:
-    #         conn.request("DELETE","/api/tasks/"+task)
-    #         response = conn.getresponse()
-    #         data = response.read()
+        # Delete each individual task
+        for task in tasks:
+            conn.request("DELETE","/api/tasks/"+task)
+            response = conn.getresponse()
+            data = response.read()
 
-    #     # Fetch a list of tasks
-    #     tasks = getTasks(conn)
+        # Fetch a list of tasks
+        tasks = getTasks(conn)
 
     # Exit gracefully
     conn.close()

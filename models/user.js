@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
   name: {type: String, required: true},
   email: {type: String, unique: true, required: true},
-  pendingTasks: [{type: mongoose.Schema.Types.ObjectId,ref: 'Task'}],
+  pendingTasks: [{type: String}],
   dateCreated: {type: Date, default: Date.now}
 });
 
